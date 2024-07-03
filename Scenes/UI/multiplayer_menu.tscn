@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkrxu6t266ggs"]
+
+[ext_resource type="Script" path="res://Scripts/Client/Menus/multiplayer_menu.gd" id="1_gpamw"]
+
+[node name="Multiplayer Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gpamw")
+
+[node name="Button Container" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -82.5
+offset_right = 110.0
+offset_bottom = 82.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Host BTN" type="Button" parent="Button Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+text = "Host Game"
+
+[node name="HSeparator" type="HSeparator" parent="Button Container"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Connection Input LBL" type="Label" parent="Button Container"]
+layout_mode = 2
+text = "Connection Info (IP/Port)"
+horizontal_alignment = 1
+
+[node name="Conection Input Container" type="HBoxContainer" parent="Button Container"]
+layout_mode = 2
+
+[node name="IP Text" type="LineEdit" parent="Button Container/Conection Input Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+text = "127.0.0.1"
+
+[node name="Port Text" type="LineEdit" parent="Button Container/Conection Input Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "8290"
+
+[node name="Join BTN" type="Button" parent="Button Container"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.5
+text = "Join Game"
+
+[connection signal="pressed" from="Button Container/Host BTN" to="." method="_on_host_btn_pressed"]
+[connection signal="pressed" from="Button Container/Join BTN" to="." method="_on_join_btn_pressed"]

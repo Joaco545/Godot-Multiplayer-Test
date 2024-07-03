@@ -14,6 +14,10 @@ config/name="Mutiplayer Test"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MultiplayerController="*res://Scripts/multiplayer_controller.gd"
+
 [filesystem]
 
 import/blender/enabled=false
