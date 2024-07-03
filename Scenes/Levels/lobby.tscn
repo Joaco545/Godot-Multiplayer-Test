@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bl5cd35jdowqh"]
+[gd_scene load_steps=5 format=3 uid="uid://bl5cd35jdowqh"]
 
 [ext_resource type="Environment" uid="uid://bav28xa74ppd3" path="res://hdr_enviroment.tres" id="1_ukrek"]
+[ext_resource type="Script" path="res://Scripts/Client/login.gd" id="2_rss08"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ryho4"]
 size = Vector2(100, 100)
@@ -31,3 +32,49 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.92275, 1, -0.688156)
 [node name="Floor" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_ryho4")
 surface_material_override/0 = SubResource("StandardMaterial3D_vljqb")
+
+[node name="Login" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_rss08")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Login"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Name Label" type="Label" parent="Login/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 26
+text = "Insert your name Below"
+
+[node name="Name Text" type="LineEdit" parent="Login/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 26
+placeholder_text = "Name Here!"
+alignment = 1
+max_length = 16
+
+[node name="Submint Btn" type="Button" parent="Login/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 26
+text = "Login"
+
+[connection signal="pressed" from="Login/VBoxContainer/Submint Btn" to="Login" method="_on_submint_btn_pressed"]

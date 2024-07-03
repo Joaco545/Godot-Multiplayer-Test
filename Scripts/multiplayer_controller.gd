@@ -7,6 +7,8 @@ var is_client_connected = false
 
 var peer: ENetMultiplayerPeer
 
+
+
 func _ready():
 	
 	multiplayer.peer_connected.connect(peer_connected)
@@ -16,44 +18,6 @@ func _ready():
 	multiplayer.server_disconnected.connect(server_disconnected)
 	
 	pass
-
-
-#region CONNECTION EVENTS
-
-# Called on server and client on connection event
-func peer_connected(id):
-	print("Player {id} conected!".format({"id": id}))
-	
-
-
-# Called on server and client on disconnect event
-func peer_disconnected(id):
-	print("Player {id} disconnected".format({"id": id}))
-	
-
-
-# Called on client on connection event
-func connected_to_server():
-	print("Connected to server sucessfuly")
-	
-	is_client_connected = true
-	
-
-
-# Called on client on initial connection failed event
-func connection_failed():
-	print("Coudn't connect to server")
-	
-	is_client_connected = false
-	
-
-
-# Called on client on server disconnetion event
-func server_disconnected():
-	print("Disconnected from server")
-	
-
-#endregion
 
 
 #region NETWORKING SETUP
@@ -95,5 +59,77 @@ func join_server(address:String, port:int):
 	
 	pass
 
+
+#endregion
+
+
+#region CONNECTION EVENTS
+
+# Called on server and client on connection event
+func peer_connected(id):
+	print("Player {id} conected!".format({"id": id}))
+	
+	# Spawn new player on Lobby
+	
+
+
+# Called on server and client on disconnect event
+func peer_disconnected(id):
+	print("Player {id} disconnected".format({"id": id}))
+	
+	# Remove player (any time)
+	
+
+
+# Called on client on connection event
+func connected_to_server():
+	print("Connected to server sucessfuly")
+	is_client_connected = true
+	
+	# Load lobby
+	SceneManager.switch_scene("LOBBY")
+	# Spawn all other players and sync pos
+	# Get player name (Done on lobby)
+	# Send info to others (Done on lobby)
+	
+
+
+# Called on client on initial connection failed event
+func connection_failed():
+	print("Coudn't connect to server")
+	is_client_connected = false
+	
+	# Do nothing?
+	
+
+
+# Called on client on server disconnetion event
+func server_disconnected():
+	print("Disconnected from server")
+	is_client_connected = false
+	
+	# Go back to main menu alone
+	SceneManager.switch_scene("MAIN_MENU")
+
+#endregion
+
+
+#region GAME SETUP
+
+# If called from connected_to_server it will a recurison,
+# so call_local must be removed from rpc tag
+@rpc("any_peer", "call_local")
+func send_player_information(name, id):
+	# Si no me registre, o cambio mi ID (me re-conecte mas tarde al server)
+	if !GameManager.players.has(name) or GameManager.Players[name].id != id:
+		GameManager.players[name] = {
+			"id" : id
+		}
+	
+	if multiplayer.is_server():
+		for i in GameManager.Players:
+			send_player_information.rpc(i, GameManager.Players[i].id)
+		
+	
 
 #endregion
