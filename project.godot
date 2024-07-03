@@ -22,6 +22,10 @@ MultiplayerController="*res://Scripts/multiplayer_controller.gd"
 
 import/blender/enabled=false
 
+[gui]
+
+theme/custom_font="res://Roboto-Regular.ttf"
+
 [physics]
 
 3d/physics_engine="JoltPhysics3D"
