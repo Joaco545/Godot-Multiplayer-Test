@@ -1,0 +1,19 @@
+[gd_resource type="Environment" load_steps=4 format=3 uid="uid://bav28xa74ppd3"]
+
+[ext_resource type="Texture2D" uid="uid://3xod4ijwb4ru" path="res://autumn_field_puresky_4k.hdr" id="1_tedyl"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_p5qag"]
+panorama = ExtResource("1_tedyl")
+
+[sub_resource type="Sky" id="Sky_o0b4t"]
+sky_material = SubResource("PanoramaSkyMaterial_p5qag")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_o0b4t")
+ambient_light_color = Color(0.501961, 0.501961, 0.501961, 1)
+ambient_light_sky_contribution = 0.3
+ambient_light_energy = 2.0
+tonemap_mode = 2
+tonemap_exposure = 0.6
+tonemap_white = 16.0
