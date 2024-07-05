@@ -10,4 +10,11 @@ var client_name: String
 
 # Tell the server to add us to the player list with out new name! :D
 func spawn_player():
-	MultiplayerController.send_player_information.rpc_id(1, client_name, multiplayer.get_unique_id())
+	
+	if multiplayer.is_server():
+		MultiplayerController.send_player_information(client_name, multiplayer.get_unique_id())
+		
+	else:
+		MultiplayerController.send_player_information.rpc_id(1, client_name, multiplayer.get_unique_id())
+	
+	pass

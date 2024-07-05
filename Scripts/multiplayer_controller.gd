@@ -42,6 +42,12 @@ func initialize_server(port:int):
 	print("Server created sucessfully")
 	
 	is_host = true
+	
+	# If the server is also a client, switch to lobby scene
+	if !OS.has_feature("dedicated_server"):
+		SceneManager.switch_scene("LOBBY")
+	
+	pass
 
 
 func join_server(address:String, port:int):
@@ -71,6 +77,7 @@ func peer_connected(id):
 	
 	# Spawn new player on Lobby
 	
+	pass
 
 
 # Called on server and client on disconnect event
@@ -79,6 +86,7 @@ func peer_disconnected(id):
 	
 	# Remove player (any time)
 	
+	pass
 
 
 # Called on client on connection event
@@ -92,6 +100,7 @@ func connected_to_server():
 	# Get player name (Done on lobby)
 	# Send info to others (Done on lobby)
 	
+	pass
 
 
 # Called on client on initial connection failed event
@@ -101,6 +110,7 @@ func connection_failed():
 	
 	# Do nothing?
 	
+	pass
 
 
 # Called on client on server disconnetion event
@@ -110,26 +120,28 @@ func server_disconnected():
 	
 	# Go back to main menu alone
 	SceneManager.switch_scene("MAIN_MENU")
+	
+	pass
 
 #endregion
 
 
 #region GAME SETUP
 
-# If called from connected_to_server it will a recurison,
-# so call_local must be removed from rpc tag
-@rpc("any_peer", "call_local")
+@rpc("any_peer")
 func send_player_information(name, id):
 	# Si no me registre, o cambio mi ID (me re-conecte mas tarde al server)
-	if !GameManager.players.has(name) or GameManager.Players[name].id != id:
+	if !GameManager.players.has(name) or GameManager.players[name].id != id:
 		GameManager.players[name] = {
 			"id" : id
 		}
 	
 	if multiplayer.is_server():
-		for i in GameManager.Players:
-			send_player_information.rpc(i, GameManager.Players[i].id)
+		for i in GameManager.players:
+			if GameManager.players[i].id == id:
+				continue;
+			send_player_information.rpc(i, GameManager.players[i].id)
 		
-	
+	pass
 
 #endregion
